@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 void usage() {
+  char track[] = "취약점";
+  char name[] = "조승현";
+  printf("[bob8][%s]pcap_test[%s]\n", track, name);
   printf("syntax: pcap_test <interface>\n");
   printf("sample: pcap_test wlan0\n");
 }
@@ -15,7 +18,7 @@ int main(int argc, char* argv[]) {
   char* dev = argv[1];
   char errbuf[PCAP_ERRBUF_SIZE];
   pcap_t* handle = pcap_open_live(dev, BUFSIZ, 1, 1000, errbuf);
-  if (handle == NULL) {
+  if (!handle) {
     fprintf(stderr, "couldn't open device %s: %s\n", dev, errbuf);
     return -1;
   }
@@ -60,12 +63,15 @@ int main(int argc, char* argv[]) {
     dport += packet[37];
     printf("%d", dport);
     printf("\nData ");
-    for(int i=54; i<64; i++){
+    for(int i=66; i<76; i++){
+        if (!packet[i]){
+            printf("NONE");
+            break;
+        }
         printf("%02x ", packet[i]);
     }
     printf("\n===================================\n");
   }
-
   pcap_close(handle);
   return 0;
 }
