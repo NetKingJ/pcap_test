@@ -3,9 +3,6 @@
 #define tcp_num 6
 
 void usage() {
-    char track[] = "취약점";
-    char name[] = "조승현";
-    printf("[bob8][%s]pcap_test[%s]\n", track, name);
     printf("syntax: pcap_test <interface>\n");
     printf("sample: pcap_test wlan0\n");
 }
